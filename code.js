@@ -14,6 +14,25 @@ function divide(a, b) {
     return a / b;
 };
 
+function operate(a, b, operation) {
+    switch (operation) {
+        case add:
+            return add(a, b);
+            break;
+        case subtract:
+            return subtract(a, b);
+            break;
+        case multiply:
+            return multiply(a, b);
+            break;
+        case divide:
+            return divide(a, b);
+            break;
+        default:
+            return `not a valid operation`;
+    }
+}
+
 let num1;
 let operator;
 let num2;
