@@ -33,6 +33,21 @@ function operate(a, b, operation) {
     }
 }
 
+function addNumbertoDisplay(button) {
+    const numbers = '0123456789.';
+    if (numbers.includes(String(button.textContent))) {
+        display.textContent += String(button.textContent);
+    };
+};
+
 let num1;
 let operator;
 let num2;
+const display = document.querySelector('.calculator-display');
+const calculatorButtons = document.querySelectorAll('button');
+calculatorButtons.forEach(button => button.addEventListener('click', () => {
+    console.log(button.textContent);
+    if ('0123456789.'.includes(String(button.textContent))) {
+        display.textContent += String(button.textContent);
+    };
+}));
