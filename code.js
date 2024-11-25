@@ -16,16 +16,16 @@ function divide(a, b) {
 
 function operate(a, b, operation) {
     switch (operation) {
-        case add:
+        case '+':
             return add(a, b);
             break;
-        case subtract:
+        case '-':
             return subtract(a, b);
             break;
-        case multiply:
+        case 'x':
             return multiply(a, b);
             break;
-        case divide:
+        case '÷':
             return divide(a, b);
             break;
         default:
@@ -63,8 +63,20 @@ calculatorButtons.forEach(button => button.addEventListener('click', () => {
 
         if (calculator['operator'] === '') {
             calculator['operator'] = button.textContent;
-        }  
+        }      
         
-        console.table(calculator);
-    };
+    } else if (String(button.textContent) === '=') {
+        calculator['num2'] = Number(display.textContent);
+        display.textContent = operate(calculator['num1'], calculator['num2'], calculator['operator']);
+        calculator['num1'] = operate(calculator['num1'], calculator['num2'], calculator['operator']);
+        calculator['num2'] = '';
+        calculator['operator'] = '';
+        calculator['currentOperand'] = 'num1';
+    } else if (String(button.textContent) === 'AC') {
+        display.textContent = '';
+        calculator['num1'] = '';
+        calculator['num2'] = '';
+        calculator['operator'] = '';
+        calculator['currentOperand'] = 'num1';
+    }
 }));
