@@ -15,6 +15,10 @@ function divide(a, b) {
 };
 
 function operate(a, b, operation) {
+    if (b === '') {
+        operation = 'none';
+    };
+
     switch (operation) {
         case '+':
             return add(a, b);
@@ -28,15 +32,18 @@ function operate(a, b, operation) {
         case '÷':
             return divide(a, b);
             break;
+        case 'none':
+            return a;
+            break;
         default:
             return `not a valid operation`;
     }
 }
 
 let calculator = {
-    num1: '',
+    num1: 0,
     num2: '',
-    operator: '',
+    operator: 'none',
     currentOperand: 'num1',
 }
 
@@ -48,9 +55,11 @@ calculatorButtons.forEach(button => button.addEventListener('click', () => {
         if (String(button.textContent) === '.') {
             if ((display.textContent.split(".").length - 1) < 1) {
                 display.textContent += String(button.textContent);
+                calculator[calculator['currentOperand']] = Number(display.textContent);
             }
         } else {
             display.textContent += String(button.textContent);
+            calculator[calculator['currentOperand']] = Number(display.textContent);
         }
     } else if ('+-x÷'.includes(String(button.textContent))) {
         calculator[calculator['currentOperand']] = Number(display.textContent);
@@ -61,22 +70,22 @@ calculatorButtons.forEach(button => button.addEventListener('click', () => {
             alert(`Hey, only two numbers can be used!`);
         }
 
-        if (calculator['operator'] === '') {
+        if (calculator['operator'] === 'none') {
             calculator['operator'] = button.textContent;
         }      
         
     } else if (String(button.textContent) === '=') {
-        calculator['num2'] = Number(display.textContent);
         display.textContent = operate(calculator['num1'], calculator['num2'], calculator['operator']);
         calculator['num1'] = operate(calculator['num1'], calculator['num2'], calculator['operator']);
         calculator['num2'] = '';
-        calculator['operator'] = '';
+        calculator['operator'] = 'none';
         calculator['currentOperand'] = 'num1';
     } else if (String(button.textContent) === 'AC') {
         display.textContent = '';
-        calculator['num1'] = '';
+        calculator['num1'] = 0;
         calculator['num2'] = '';
-        calculator['operator'] = '';
+        calculator['operator'] = 'none';
         calculator['currentOperand'] = 'num1';
     }
+    console.table(calculator);
 }));
