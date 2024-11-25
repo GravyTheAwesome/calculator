@@ -33,21 +33,38 @@ function operate(a, b, operation) {
     }
 }
 
-function addNumbertoDisplay(button) {
-    const numbers = '0123456789.';
-    if (numbers.includes(String(button.textContent))) {
-        display.textContent += String(button.textContent);
-    };
-};
+let calculator = {
+    num1: '',
+    num2: '',
+    operator: '',
+    currentOperand: 'num1',
+}
 
-let num1;
-let operator;
-let num2;
 const display = document.querySelector('.calculator-display');
 const calculatorButtons = document.querySelectorAll('button');
 calculatorButtons.forEach(button => button.addEventListener('click', () => {
     console.log(button.textContent);
     if ('0123456789.'.includes(String(button.textContent))) {
-        display.textContent += String(button.textContent);
+        if (String(button.textContent) === '.') {
+            if ((display.textContent.split(".").length - 1) < 1) {
+                display.textContent += String(button.textContent);
+            }
+        } else {
+            display.textContent += String(button.textContent);
+        }
+    } else if ('+-x÷'.includes(String(button.textContent))) {
+        calculator[calculator['currentOperand']] = Number(display.textContent);
+        if (calculator['currentOperand'] === 'num1') {
+            calculator['currentOperand'] = 'num2';
+            display.textContent = '';
+        } else {
+            alert(`Hey, only two numbers can be used!`);
+        }
+
+        if (calculator['operator'] === '') {
+            calculator['operator'] = button.textContent;
+        }  
+        
+        console.table(calculator);
     };
 }));
