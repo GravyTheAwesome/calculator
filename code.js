@@ -75,11 +75,16 @@ calculatorButtons.forEach(button => button.addEventListener('click', () => {
         }      
         
     } else if (String(button.textContent) === '=') {
-        display.textContent = operate(calculator['num1'], calculator['num2'], calculator['operator']);
-        calculator['num1'] = operate(calculator['num1'], calculator['num2'], calculator['operator']);
-        calculator['num2'] = '';
-        calculator['operator'] = 'none';
-        calculator['currentOperand'] = 'num1';
+        if ((calculator['num1'] === 0 && calculator['operator'] === '÷')  || (calculator['num2'] === 0 && calculator['operator'] === '÷')) {
+            alert(`Hey, you know you can't divide by 0!`);
+        } else {
+            display.textContent = Math.round(operate(calculator['num1'], calculator['num2'], calculator['operator']) * 1000000) / 1000000;
+            calculator['num1'] = Math.round(operate(calculator['num1'], calculator['num2'], calculator['operator']) * 1000000) / 1000000;
+            calculator['num2'] = '';
+            calculator['operator'] = 'none';
+            calculator['currentOperand'] = 'num1';            
+        }
+
     } else if (String(button.textContent) === 'AC') {
         display.textContent = '';
         calculator['num1'] = 0;
